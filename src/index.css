@@ -38,3 +38,15 @@ box-shadow: 0px 9px 19px -3px #000000;
 Tag {
   font-weight: 300;
 }
+
+.bannerCompany {
+  align-items: center;
+}
+
+.bannerCompany div{
+  text-transform: uppercase;
+  width:150px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: .2rem;
+}

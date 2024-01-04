@@ -1,6 +1,8 @@
 import { Component, Fragment } from "react";
 import Company from "../components/Company.js";
 import Movie from "../components/Movie.js";
+import Header from "../components/Header.js";
+import MoviesSuggested from "./MoviesSuggested.js";
 
 export default class App extends Component {
   constructor(props) {
@@ -9,7 +11,6 @@ export default class App extends Component {
       movies : [],
       companies : [
         {
-          "id": `company + Date.now()`,
           "name": "disney",
         },
         {
@@ -42,7 +43,7 @@ export default class App extends Component {
 
   //La méthode render sera automatiquement appelée lorsque le composant App sera interrogé dans du JSX sous la forme suivante : <App/>
   render() {
-    const listMovies = this.state.movies.map((movie) => {
+    const listMoviesLatest = this.state.movies.map((movie) => {
       return (
         <Movie key={movie.id} id={movie.id} title={movie.title} poster={movie.poster}/> // <- Ceci est un composant
       )
@@ -56,28 +57,27 @@ export default class App extends Component {
 
     return (
       <Fragment> {/* <Fragment> > Permet d'encapsuler code JSX dans une seule balise parente mais qui ne sera pas affichée dans le HTML */}
-        <header>
-          <div className="container">
-            <img src={process.env.PUBLIC_URL + '/img/logo.png'} alt="Logo Disney +" />
-          </div>
-        </header>
+        <Header/>
         <main>
           <section id="banner">
           </section>
           <section id="companies">
             <div className="container cards">
               {listCompanies}
-              {/* <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-disney.png'} alt="Logo Disney" /></div>
-              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-pixar.png'} alt="Logo Pixar" /></div>
-              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-marvel.png'} alt="Logo Marvel" /></div>
-              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-starwars.png'} alt="Logo Star Wars" /></div> */}
             </div>
           </section>
-          <section id="latest"><h1>Nouveautés</h1>
+          <section id="latest">
+            <h1>Nouveautés</h1>
             <div className="container">
-                {listMovies}
-            </div></section>
-          <section id="suggest"><h1>Suggestions</h1></section>
+              {listMoviesLatest}
+            </div>
+          </section>
+          <section id="suggest">
+            <h1>Suggestions</h1>
+            <div className="container">
+              <MoviesSuggested/>
+            </div>
+          </section>
           
         </main>
       </Fragment>

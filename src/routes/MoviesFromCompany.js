@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react';
+import Header from '../components/Header.js';
+import Movie from '../components/Movie.js';
 
 export default class MoviesFromCompany extends Component {
 
@@ -21,8 +23,24 @@ export default class MoviesFromCompany extends Component {
    }
 
     render() {
+        const listMoviesFromCompany = this.state.movies.map((movie) => {
+            return (
+              <Movie key={movie.id} id={movie.id} title={movie.title} poster={movie.poster}/> // <- Ceci est un composant
+            )
+        });
+
         return (
-          <div>coucou</div>
+            
+            <Fragment>
+                <Header/>
+                <div className="container bannerCompany">
+                    <img src={`${process.env.PUBLIC_URL}/img/companies/logo-${this.props.match.params.name}.png`} alt={`Logo ${this.props.match.params.name}`} />
+                    <div className="">vous présente tout son catalogue</div>
+                </div>
+                <div className="container">
+                    {listMoviesFromCompany}
+                </div>
+            </Fragment>
         )
     }
 }
