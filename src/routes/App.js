@@ -3,6 +3,8 @@ import Company from "../components/Company.js";
 import Movie from "../components/Movie.js";
 import Header from "../components/Header.js";
 import MoviesSuggested from "./MoviesSuggested.js";
+import { Carousel } from 'antd';
+import { Link } from "react-router-dom";
 
 export default class App extends Component {
   constructor(props) {
@@ -22,16 +24,20 @@ export default class App extends Component {
         {
           "name": "starwars",
         },],
+      highlighted : [],
     };
   }
 
   // Méthode asynchrone pour récupérer les données des membres de l'API
   async getMovies() {
     const data = await fetch("https://elorri.fr/api/disney-plus/movies").then(response => response.json());
-    console.log(data);
+    
+    // Utilisez la méthode filter pour obtenir uniquement les films avec highlighted: true
+    const highlightedMovies = data.filter(movie => movie.highlighted === true);
 
     this.setState({
-      movies:data.slice(0,6)
+      movies: data.slice(0,6),
+      highlighted: highlightedMovies,
     })
   }
 
@@ -49,6 +55,16 @@ export default class App extends Component {
       )
     });
 
+    const listMoviesHighlighted = this.state.highlighted.map((movie) => {
+      return (
+        <div className="banner">
+          <Link to={`/movie/${movie.id}`}>
+            <img src={movie.cover} alt={`${movie.title} image`}/>
+          </Link>
+        </div>
+      )
+    });
+
     const listCompanies = this.state.companies.map((company) => {
       return (
         <Company key={company.name + Date.now()} name={company.name} /> // <- Ceci est un composant
@@ -60,6 +76,9 @@ export default class App extends Component {
         <Header/>
         <main>
           <section id="banner">
+            <Carousel autoplay>
+              {listMoviesHighlighted}
+            </Carousel>
           </section>
           <section id="companies">
             <div className="container cards">

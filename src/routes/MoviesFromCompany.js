@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Header from '../components/Header.js';
 import Movie from '../components/Movie.js';
 
+
 export default class MoviesFromCompany extends Component {
 
     state = {
@@ -30,7 +31,6 @@ export default class MoviesFromCompany extends Component {
         });
 
         return (
-            
             <Fragment>
                 <Header/>
                 <div className="container bannerCompany">
