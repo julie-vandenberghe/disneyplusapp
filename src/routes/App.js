@@ -1,11 +1,26 @@
 import { Component, Fragment } from "react";
+import Company from "../components/Company.js";
 import Movie from "../components/Movie.js";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies : []
+      movies : [],
+      companies : [
+        {
+          "id": `company + Date.now()`,
+          "name": "disney",
+        },
+        {
+          "name": "pixar",
+        },
+        {
+          "name": "marvel",
+        },
+        {
+          "name": "starwars",
+        },],
     };
   }
 
@@ -15,7 +30,7 @@ export default class App extends Component {
     console.log(data);
 
     this.setState({
-      movies:data
+      movies:data.slice(0,6)
     })
   }
 
@@ -24,11 +39,18 @@ export default class App extends Component {
     this.getMovies();
   }
 
+
   //La méthode render sera automatiquement appelée lorsque le composant App sera interrogé dans du JSX sous la forme suivante : <App/>
   render() {
-    const listMovies = this.state.movies.map((movie, index) => {
+    const listMovies = this.state.movies.map((movie) => {
       return (
-        <Movie key={movie.id} id={movie.id} name={movie.name}/> // <- Ceci est un composant
+        <Movie key={movie.id} id={movie.id} title={movie.title} poster={movie.poster}/> // <- Ceci est un composant
+      )
+    });
+
+    const listCompanies = this.state.companies.map((company) => {
+      return (
+        <Company key={company.name + Date.now()} name={company.name} /> // <- Ceci est un composant
       )
     });
 
@@ -44,21 +66,19 @@ export default class App extends Component {
           </section>
           <section id="companies">
             <div className="container cards">
-              <div className="card"><img src={process.env.PUBLIC_URL + '/img/companies/logo-disney.png'} alt="Logo Disney" /></div>
-              <div className="card"><img src={process.env.PUBLIC_URL + '/img/companies/logo-pixar.png'} alt="Logo Pixar" /></div>
-              <div className="card"><img src={process.env.PUBLIC_URL + '/img/companies/logo-marvel.png'} alt="Logo Marvel" /></div>
-              <div className="card"><img src={process.env.PUBLIC_URL + '/img/companies/logo-pixar.png'} alt="Logo Pixar" /></div>
+              {listCompanies}
+              {/* <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-disney.png'} alt="Logo Disney" /></div>
+              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-pixar.png'} alt="Logo Pixar" /></div>
+              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-marvel.png'} alt="Logo Marvel" /></div>
+              <div className="card box-shadow"><img src={process.env.PUBLIC_URL + '/img/companies/logo-starwars.png'} alt="Logo Star Wars" /></div> */}
             </div>
           </section>
-          <section id="latest"></section>
-          <section id="banner"></section>
-          <div className="">
-            <h1>Disney+</h1>
-            <p>Liste des films :</p>
-            <ul>
-              {listMovies}
-            </ul>
-          </div>
+          <section id="latest"><h1>Nouveautés</h1>
+            <div className="container">
+                {listMovies}
+            </div></section>
+          <section id="suggest"><h1>Suggestions</h1></section>
+          
         </main>
       </Fragment>
     )
